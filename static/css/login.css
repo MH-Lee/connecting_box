@@ -1,0 +1,18 @@
+.container-login {
+    margin: 5rem 0;
+}
+
+.form-group input{
+    border-radius: 5px;
+    border: 1px solid rgb(39, 38, 38);
+}
+
+.btn {
+    border-radius: 5px;
+}
+
+@media(max-width: 768px) {
+    .container-login {
+        padding: 2rem 3rem;
+    }
+  }

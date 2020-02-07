@@ -1,0 +1,150 @@
+{% extends "emailboard/_base.html" %}
+{% load static from staticfiles %} 
+
+
+{% block search %}
+<form class="form-inline my-2 my-lg-0 justify-content-end"  method="GET" action="{% url 'email_list' %}">
+  {% csrf_token %}
+    <input type="text" class="searchTerm" type="search" name="q" placeholder="Search">
+    <button type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+    </button>
+</form>
+{% endblock %}
+
+{% block table %}
+<button class="btn btn-primary" onclick="location.href='/contents/write/'">글쓰기</button>
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>id
+            {% if direction == 'asc' %}
+            <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+            {% else %}
+            <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+            {% endif %}
+        </th>
+        <th class="center">제목
+          {% if direction == 'asc' %}
+          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          {% else %}
+          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          {% endif %}
+        </th>
+        <th class="hide">작성자
+          {% if direction == 'asc' %}
+          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          {% else %}
+          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          {% endif %}
+        </th>
+        <th class="hide">작성일자
+          {% if direction == 'asc' %}
+          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          {% else %}
+          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          {% endif %}
+        </th>
+      </tr>
+
+    </thead>
+    <tbody></tbody>
+      {% for mail in email_contents %}
+      <tr>
+        <td class="center">{{ mail.id }}</td>
+        {% if mail.contents == 'nan' %}
+        <td>{{ mail.title }}</td>
+        {% else %}
+        <td><a href="/contents/mail_detail/{{ mail.id }}">{{ mail.title }}</a></td>
+        {% endif %}
+        <td class="hide">{{ mail.writer }}</td>
+        <td class="hide">{{ mail.registered_dttm | date:"Y-m-d" }}</td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="row mt-2">
+    <div class="col-12">
+      <nav class="pagination-nav">
+        <ul class="pagination justify-content-center">
+          {% if email_contents.has_previous %}
+          <li class="page-item">
+            {% if order_by != None %}
+            <a class="page-link" href="?p=1&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-left"></i></a>
+            {% else %}
+            <a class="page-link" href="?p=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-left"></i></a>
+            {% endif %}
+          </li>
+          <li class="page-item">
+            {% if order_by != None %}
+            <a class="page-link" href="?p={{ email_contents.previous_page_number }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-left"></i></a>
+            {% else %}
+            <a class="page-link" href="?p={{ email_contents.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-left"></i></a>
+            {% endif %}
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+              <a class="page-link " href="#"><i class="fas fa-angle-double-left"></i></a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
+          </li>
+          {% endif %}
+         
+          {% if email_contents.number > 2 %} 
+            {% if order_by != None %}
+              <li><a class="page-link" href="?p={{ 1 }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"> 1 </a></li>
+            {% else %}
+              <li><a class="page-link" href="?p={{ 1 }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"> 1 </a></li>
+            {% endif %}
+          <li class="page-link"><span>...<span class="sr-only">...</span></span></li> 
+          {% endif %}
+          
+          {% for i in page_range %} 
+          {% if email_contents.number == i %} 
+          <li class="page-link" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li> 
+          {% else %} 
+            {% if order_by != None %}
+              <li class="page-item active"><a class="page-link" href="?p={{ i }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a></li> 
+            {% else %} 
+              <li class="page-item active"><a class="page-link" href="?p={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a></li> 
+            {% endif %}
+          {% endif %} 
+          {% endfor %} 
+  
+          {% if email_contents.number < max_index %} 
+          <li class="page-link"><span>...<span class="sr-only">...</span></span></li> 
+            {% if order_by != None %}
+              <li><a class="page-link" href="?page={{ max_index|add:'2' }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ max_index|add:"2" }}</a></li> 
+            {% else %}
+              <li><a class="page-link" href="?page={{ max_index|add:'2' }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ max_index|add:"2" }}</a></li> 
+            {% endif %}
+          {% endif %}
+  
+          {% if email_contents.has_next %}
+          <li class="page-item">
+            {% if order_by != None %}
+            <a class="page-link" href="?p={{ email_contents.next_page_number }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-right"></i></a>
+            {% else %}
+            <a class="page-link" href="?p={{ email_contents.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-right"></i></a>
+            {% endif %}
+          </li>
+          <li class="page-item">
+            {% if order_by != None %}
+            <a class="page-link" href="?p={{ email_contents.paginator.num_pages }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-right"></i></a>
+            {% else %}
+            <a class="page-link" href="?p={{ email_contents.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-right"></i></a>
+            {% endif %}
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link disabled" href="#"><i class="fas fa-chevron-right"></i></a>
+          </li>
+          <li class="page-item disabled">
+              <a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+{% endblock %}
