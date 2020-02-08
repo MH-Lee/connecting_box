@@ -1,7 +1,7 @@
 {% extends "emailboard/_base.html" %}
 {% load static from staticfiles %} 
 
-
+{% block title %}Mail Contents{% endblock %}
 {% block search %}
 <form class="form-inline my-2 my-lg-0 justify-content-end"  method="GET" action="{% url 'email_list' %}">
   {% csrf_token %}
@@ -13,36 +13,33 @@
 {% endblock %}
 
 {% block table %}
-<button class="btn btn-primary" onclick="location.href='/contents/write/'">글쓰기</button>
+{% if request.user.is_superuser %}
+<button class="btn btn-primary" onclick="location.href='/contents/mail_write/'">글쓰기</button>
+{% else %}
+{% endif %}
 <table class="table">
     <thead class="thead-light">
       <tr>
-        <th>id
+        <th class="index">id
             {% if direction == 'asc' %}
-            <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+            <a id href="?order_by=id&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
             {% else %}
-            <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+            <a id href="?order_by=id&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
             {% endif %}
         </th>
         <th class="center">제목
           {% if direction == 'asc' %}
-          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          <a id href="?order_by=title&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
           {% else %}
-          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          <a id href="?order_by=title&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
           {% endif %}
         </th>
-        <th class="hide">작성자
-          {% if direction == 'asc' %}
-          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
-          {% else %}
-          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
-          {% endif %}
-        </th>
+        <th class="hide">작성자</th>
         <th class="hide">작성일자
           {% if direction == 'asc' %}
-          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          <a id href="?order_by=registered_dttm&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
           {% else %}
-          <a id href="#"><i class="fa fa-fw fa-sort"></i></a>
+          <a id href="?order_by=registered_dttm&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
           {% endif %}
         </th>
       </tr>
@@ -51,12 +48,8 @@
     <tbody></tbody>
       {% for mail in email_contents %}
       <tr>
-        <td class="center">{{ mail.id }}</td>
-        {% if mail.contents == 'nan' %}
-        <td>{{ mail.title }}</td>
-        {% else %}
+        <td class="index">{{ mail.id }}</td>
         <td><a href="/contents/mail_detail/{{ mail.id }}">{{ mail.title }}</a></td>
-        {% endif %}
         <td class="hide">{{ mail.writer }}</td>
         <td class="hide">{{ mail.registered_dttm | date:"Y-m-d" }}</td>
 

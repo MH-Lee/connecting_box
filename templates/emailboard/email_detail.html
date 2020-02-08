@@ -1,0 +1,24 @@
+{% extends "emailboard/_base.html" %}
+{% load static from staticfiles %} 
+
+{% block css %}
+<link href="{% static 'css/email_detail.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block table %}
+<div class="item1">{{ EmailContent.title }}</div>
+<div class="item2">
+    <!-- <div class="leftside"></div> -->
+    <div class="item2_1">writer : {{ EmailContent.writer }}</div>
+    <div class="item2_2">등록일 : {{ EmailContent.registered_dttm|date:"Y-m-d H:i" }}</div>
+    <!-- <div class="rightside"></div> -->
+</div>
+<div class="item3">
+    {{ EmailContent.contents|safe }}
+</div>
+
+<div class="item4">
+    <div class="item4_1"><button type="button" class="btn btn-primary" onclick="location.href='/contents/mail_list/'">목록</button> </div>
+    <div class="item4_2"> </div>
+</div>
+{% endblock %}

@@ -8,16 +8,15 @@ from accounts.models import User
 import pandas as pd
 
 # Create your views here.
+def home(request):
+    return render(request, 'home.html')
+
 def rescue_detail(request, pk):
     try:
         rescue = Rescue.objects.get(pk=pk)
     except Rescue.DoesNotExist:
         raise Http404('게시글을 찾을 수 없습니다.')
     return render(request, 'contents/rescue_detail.html', {'rescue':rescue})
-
-def home(request):
-    return render(request, 'home.html')
-
 
 def rescue_list(request):
     if not request.user.is_authenticated:
@@ -65,26 +64,24 @@ def rescue_list(request):
                                                             'page_range':page_range, 'max_index':max_index-2})
 
 
-
 def mail_contents_write(request):
-    if not request.session.get('user'):
+    if not request.user.is_authenticated:
         return redirect('/accounts/login/')
 
     if request.method == 'POST':
         form = MailBoard(request.POST)
         if form.is_valid():
-            user_id = request.session.get('user')
-            admin_user = User.objects.get(pk=user_id)
-            
+            username = request.user
             mail_content = EmailContents()
             mail_content.title = form.cleaned_data['title']
             mail_content.contents = form.cleaned_data['contents']
-            mail_content.writer = admin_user
+            mail_content.writer = User.objects.get(username=username)
             mail_content.save()
-            return redirect('/board/list/')
+            return redirect('/contents/mail_list/')
     else:
         form = MailBoard()
-    return render(request, 'board_write.html', {'form':form})
+    return render(request, 'emailboard/email_write.html', {'form':form})
+
 
 def email_list(request):
     if not request.user.is_authenticated:
@@ -96,19 +93,20 @@ def email_list(request):
         if order_by != None:
             if direction == 'asc':
                 email_obj = EmailContents.objects.all().order_by(order_by)
+                # print(email_obj)
             else:
                 email_obj = EmailContents.objects.all().order_by('-{}'.format(order_by))
-        else:   
+        else:
             try:
-                email_obj = EmailContents.objects.filter(
-                    Q(title_icontains=query)
-                ).order_by('-date')
+                # print(query)
+                email_obj = EmailContents.objects.filter(title__icontains=query).order_by('-id')
+                # print(email_obj)
                 direction = None
             except:
-                email_obj = EmailContents.objects.all().order_by('-date')
+                email_obj = EmailContents.objects.all().order_by('-id')
                 direction = None
     else:
-        email_obj = EmailContents.objects.all().order_by('-date')
+        email_obj = EmailContents.objects.all().order_by('-id')
         direction = None
     page = int(request.GET.get('p',1))
     try:
@@ -124,7 +122,13 @@ def email_list(request):
         end_index = 5-start_index 
     else : 
         end_index = index+3 if index <= max_index - 3 else max_index 
-    page_range = list(paginator.page_range[start_index:end_index]) 
-    return render(request, 'emailboard/email_list.html', {'email_contens':email_contents, 'order_by':order_by , 'direction':direction,\
+    page_range = list(paginator.page_range[start_index:end_index])
+    return render(request, 'emailboard/email_list.html', {'email_contents':email_contents, 'order_by':order_by , 'direction':direction,\
                                                           'page_range':page_range, 'max_index':max_index-2})
 
+def mail_contents_detail(request, pk):
+    try:
+        EmailContent = EmailContents.objects.get(pk=pk)
+    except EmailContent.DoesNotExist:
+        raise Http404('게시글을 찾을 수 없습니다.')
+    return render(request, 'emailboard/email_detail.html', {'EmailContent':EmailContent})

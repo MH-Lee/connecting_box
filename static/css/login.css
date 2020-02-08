@@ -7,10 +7,6 @@
     border: 1px solid rgb(39, 38, 38);
 }
 
-.btn {
-    border-radius: 5px;
-}
-
 @media(max-width: 768px) {
     .container-login {
         padding: 2rem 3rem;

@@ -1,0 +1,13 @@
+.subtitle h1 {
+    padding: 10px;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+    text-transform: uppercase;
+}
+.flex-table {
+    padding-top: 3rem;
+}
+
+.subtitle form {
+    padding-bottom: 1rem;
+}

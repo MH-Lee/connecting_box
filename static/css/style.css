@@ -3,13 +3,54 @@ body {
     background-color: #d6dce5;
   }
 
+.btn {
+    border-radius: 3px 3px;
+    background: rgb(67, 68, 68);
+    border: 1px solid rgb(67, 68, 68);
+}
+
+.btn:hover {
+  background-color: black;
+  border: solid 1px black;
+}
+
+a {
+  color: inherit;
+  cursor:pointer;
+  text-decoration: none;
+}
+a:hover{
+  color:rgb(67, 68, 68);
+}
+
+h1 {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
 .container .nav-toggle {
   display: flex;
   justify-content: flex-end;
   /* background-color: blue; */
   width: 100%;
 }
-
+.nav-toggle .home {
+  width: 70%;
+}
+.home .icon {
+ display: flex;
+ justify-content: flex-start;
+ align-items: center;
+ height: 100%;
+}
+.icon i {
+  font-size: 48px
+}
 .nav-toggle header {
     /* background-color: #254a81; */
     color: white;
@@ -54,7 +95,7 @@ body {
   .menuBtn img {
     height: 40px;
     position: relative;
-    top: 13px;
+    top: 5px;
   }
 
   @media ( max-width: 768px ) {
@@ -62,7 +103,6 @@ body {
       width: 50%;
     }
   }
-
   
   @media screen and (min-width: 768px) and (max-width:1460px){
     .nav-toggle header {
