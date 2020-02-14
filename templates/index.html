@@ -21,14 +21,10 @@
     <div class="container">
 
         <div class="nav-toggle">
-            <div class="home">
-              <div class="icon">
-                <a href="/"><i class="fas fa-home"></i></a>
-              </div>
-            </div>
             <header> <span class="menuBtn"> <img src="{% static 'img/icon.svg' %}" alt="Toggle Button"> </span>
                 <nav id="navigation-list">
                   <ul>
+                    <li><a href="/">홈으로</a></li>
                     {% if request.user.is_authenticated %}
                     <li><a href="/accounts/logout">로그아웃</a></li>
                     {% else %}

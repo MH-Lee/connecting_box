@@ -49,6 +49,7 @@ class EmailContents(models.Model):
                                 verbose_name='작성자')
     registered_dttm = models.DateTimeField(auto_now_add=True,
                                         verbose_name='등록시간')
+    tags = models.ManyToManyField('contents.Tag', verbose_name='태그')
 
     def __str__(self):
         return "{}-{}".format(self.title, self.registered_dttm)
@@ -59,26 +60,26 @@ class EmailContents(models.Model):
         verbose_name_plural = 'Email-connecting-letter'
 
 
-# class Tag(models.Model):
-#     name = models.CharField(max_length=32,
-#                                 verbose_name="태그명")
-#     registered_dttm = models.DateTimeField(auto_now_add=True,
-#                                             verbose_name='등록시간')
+class Tag(models.Model):
+    name = models.CharField(max_length=32, verbose_name="태그명")
+    registered_dttm = models.DateTimeField(auto_now_add=True,
+                                            verbose_name='등록시간')
 
-#     def __str__(self):
-#         return self.name
+    def __str__(self):
+        return self.name
 
-#     class Meta:
-#         db_table = 'item tag'
-#         verbose_name = 'Connecting box 태그'
-#         verbose_name_plural = 'Connecting box 태그'
+    class Meta:
+        db_table = 'item tag'
+        verbose_name = 'Connecting box 태그'
+        verbose_name_plural = 'Connecting box 태그'
 
 
 class StartUp(models.Model):
-    name = models.CharField(max_length=50, verbose_name="기업명", choices=choice_dic)
+    name = models.CharField(max_length=50, verbose_name="기업명")
     item = models.CharField(max_length=50, verbose_name='아이템')
-    invest_state = models.CharField(max_length=10, verbose_name='투자단계')
+    invest_state = models.CharField(max_length=10, verbose_name='투자단계', choices=choice_dic)
     news_link = models.CharField(max_length=500, verbose_name='링크')
+    tags = models.ManyToManyField('contents.Tag', verbose_name='태그')
 
     def __str__(self):
         return '회사이름 : {} 아이템: {} 투자단계: {}'.format(self.name, self.item)
@@ -89,18 +90,18 @@ class ProfessorDev(models.Model):
     university = models.CharField(max_length=10, verbose_name='소속')
     item = models.CharField(max_length=50, verbose_name='아이템', choices=choice_dic)
     news_link = models.CharField(max_length=500, verbose_name='링크')
+    tags = models.ManyToManyField('contents.Tag', verbose_name='태그')
 
     def __str__(self):
         return '교수명 : {} 소속대학:{} 아이템: {}'.format(self.name, self.university, self.item)
-    
+
 
 class FinanceReport(models.Model):
     item = models.CharField(max_length=50, verbose_name='아이템', choices=choice_dic)
-    title = models.CharField(max_length=50, verbose_name="제목")
+    title = models.CharField(max_length=200, verbose_name="제목")
     security_firm = models.CharField(max_length=10, verbose_name='증권사')
     news_link = models.CharField(max_length=500, verbose_name='링크')
+    # tags = models.ManyToManyField('contents.Tag', verbose_name='태그')
 
     def __str__(self):
         return '제목: {} 증권사: {}'.format(self.title, self.security_firm)
-
-

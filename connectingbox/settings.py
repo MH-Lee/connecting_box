@@ -59,7 +59,9 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [
     'contents',
-    'accounts'
+    'accounts',
+    'taggit.apps.TaggitAppConfig',
+    'taggit_templatetags2'
 ]
 
 MIDDLEWARE = [
@@ -170,3 +172,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+TAGGIT_CASE_INTENSIVE =True
+TAGGIT_LIMIT = 50

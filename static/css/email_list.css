@@ -45,23 +45,27 @@ td {
         text-align: center;
         table-layout:fixed;
         word-break: keep-all; 
-        width: 50%;
+        width: 40%;
     }
     .hide {
-      text-align: center;
+        text-align: center;
+    }
+    .tag {
+        width: 30%;
+        text-align: center;
     }
     
 
 
 @media screen and (min-width: 768px) and (max-width:1460px){
-        .col-lg-12 table th:nth-child(3){
+        .col-lg-12 table .tag{
             display: none;
         }
         .col-lg-12 table .index {
             width: 20%;
         }
-        .col-lg-12 table  .center {
-                width: 60%;
+        .col-lg-12 table .center {
+            width: 40%;
         }
     }
 
@@ -69,7 +73,9 @@ td {
     .col-lg-12 table .hide{
         display: none;
     }
-
+    .col-lg-12 table .tag{
+        display: none;
+    }
     .col-lg-12 table .index {
             width: 20%;
     }

@@ -42,6 +42,7 @@
           <a id href="?order_by=registered_dttm&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
           {% endif %}
         </th>
+        <th class="tag">Tag</th>
       </tr>
 
     </thead>
@@ -52,7 +53,15 @@
         <td><a href="/contents/mail_detail/{{ mail.id }}">{{ mail.title }}</a></td>
         <td class="hide">{{ mail.writer }}</td>
         <td class="hide">{{ mail.registered_dttm | date:"Y-m-d" }}</td>
-
+        <td class="tag">
+          {% for tag in mail.tags.all %} 
+          {% if not forloop.last %}
+          <a href="/contents/mail_list/?q={{tag}}">{{ tag }}</a>,&nbsp;
+          {% else %}
+          <a href="/contents/mail_list/?q={{tag}}">{{ tag }}</a>
+          {% endif %}
+          {% endfor %}
+        </td>
       </tr>
       {% endfor %}
     </tbody>

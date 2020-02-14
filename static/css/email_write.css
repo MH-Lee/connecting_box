@@ -1,3 +1,17 @@
 .form-control {
     border-radius: 5px;
 }
+
+.form-group textarea {
+    height: 20rem;
+}
+
+label {
+    display: block;
+}
+
+select {
+    width : 20%;
+    height : 20rem;
+    border-radius: 5px;
+}

@@ -2,11 +2,12 @@
     width: 100%;
     height: 45px;
     position: relative;
+    justify-content: center;
     display: flex;
   }
   
   .searchTerm {
-    width: 100%;
+    width: 50%;
     border: 3px solid rgb(67, 68, 68);
     border-right: none;
     padding: 5px;
@@ -64,6 +65,10 @@
     .wrap .main-title {
       font-size: 45px;
     }
+    .searchTerm {
+      width: 80%;
+    }
+    
 }
   
 
@@ -73,5 +78,8 @@
   }
   .wrap .main-title {
     font-size: 35px;
+  }
+  .searchTerm {
+    width: 60%;
   }
 }

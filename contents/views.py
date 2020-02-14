@@ -3,7 +3,8 @@ from django.http import Http404, HttpResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .forms import MailBoard
-from .models import Rescue, EmailContents, ProfessorDev, FinanceReport, StartUp
+from django.views.generic import TemplateView, ListView
+from .models import Rescue, EmailContents, ProfessorDev, FinanceReport, StartUp, Tag
 from accounts.models import User
 import pandas as pd
 
@@ -72,11 +73,21 @@ def mail_contents_write(request):
         form = MailBoard(request.POST)
         if form.is_valid():
             username = request.user
+            tags = form.cleaned_data['tags']
+            print(tags)
             mail_content = EmailContents()
             mail_content.title = form.cleaned_data['title']
             mail_content.contents = form.cleaned_data['contents']
             mail_content.writer = User.objects.get(username=username)
             mail_content.save()
+
+            for tag in tags:
+                if not tag:
+                    continue
+                _tag, created = Tag.objects.get_or_create(name=tag)
+                mail_content.tags.add(_tag)
+            
+
             return redirect('/contents/mail_list/')
     else:
         form = MailBoard()
@@ -98,9 +109,9 @@ def email_list(request):
                 email_obj = EmailContents.objects.all().order_by('-{}'.format(order_by))
         else:
             try:
-                # print(query)
-                email_obj = EmailContents.objects.filter(title__icontains=query).order_by('-id')
-                # print(email_obj)
+                print(query)
+                email_obj = EmailContents.objects.filter(Q(title__icontains=query) | Q(tags__name__icontains=query)).order_by('-id').distinct()
+                print(email_obj)
                 direction = None
             except:
                 email_obj = EmailContents.objects.all().order_by('-id')
