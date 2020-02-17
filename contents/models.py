@@ -76,19 +76,22 @@ class Tag(models.Model):
 
 class StartUp(models.Model):
     name = models.CharField(max_length=50, verbose_name="기업명")
-    item = models.CharField(max_length=50, verbose_name='아이템')
-    invest_state = models.CharField(max_length=10, verbose_name='투자단계', choices=choice_dic)
+    category = models.CharField(max_length=20, verbose_name='분류', choices=choice_dic)
+    item = models.CharField(max_length=150, verbose_name='아이템')
+    invest_stage = models.CharField(max_length=10, verbose_name='투자단계')
+    investment = models.CharField(max_length=10, null=True, blank=True, verbose_name='투자금액(천원)')
     news_link = models.CharField(max_length=500, verbose_name='링크')
     tags = models.ManyToManyField('contents.Tag', verbose_name='태그')
 
     def __str__(self):
-        return '회사이름 : {} 아이템: {} 투자단계: {}'.format(self.name, self.item)
+        return '회사이름 : {} 아이템: {} 투자단계: {}'.format(self.name, self.item, self.invest_stage)
 
 
 class ProfessorDev(models.Model):
     name = models.CharField(max_length=50, verbose_name="교수명")
     university = models.CharField(max_length=10, verbose_name='소속')
-    item = models.CharField(max_length=50, verbose_name='아이템', choices=choice_dic)
+    category = models.CharField(max_length=20, verbose_name='분류', choices=choice_dic)
+    item = models.CharField(max_length=150, verbose_name='아이템')
     news_link = models.CharField(max_length=500, verbose_name='링크')
     tags = models.ManyToManyField('contents.Tag', verbose_name='태그')
 
@@ -97,11 +100,11 @@ class ProfessorDev(models.Model):
 
 
 class FinanceReport(models.Model):
-    item = models.CharField(max_length=50, verbose_name='아이템', choices=choice_dic)
     title = models.CharField(max_length=200, verbose_name="제목")
+    category = models.CharField(max_length=50, verbose_name='분류', choices=choice_dic)
     security_firm = models.CharField(max_length=10, verbose_name='증권사')
     news_link = models.CharField(max_length=500, verbose_name='링크')
-    # tags = models.ManyToManyField('contents.Tag', verbose_name='태그')
+    tags = models.ManyToManyField('contents.Tag', verbose_name='태그')
 
     def __str__(self):
         return '제목: {} 증권사: {}'.format(self.title, self.security_firm)

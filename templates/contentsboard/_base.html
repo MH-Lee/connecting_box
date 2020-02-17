@@ -1,0 +1,18 @@
+{% extends "../index.html" %}
+{% load static from staticfiles %}
+{% block css %}
+
+{% endblock %}
+
+{% block contents %}
+<div class="flex-table">
+    <div class="subtitle">
+        <h1>{% block title %}{% endblock %}</h1>
+        {% block search %}{% endblock %}
+    </div>
+    <div class="col-lg-12">
+        {% block table %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

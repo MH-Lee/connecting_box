@@ -10,8 +10,20 @@ label {
     display: block;
 }
 
-select {
+#id_tags {
     width : 20%;
     height : 20rem;
+    border-radius: 5px;
+}
+
+#id_category{
+    width : 100%;
+    height : 2.5rem;
+    border-radius: 5px;
+}
+
+#id_invest_stage{
+    width : 100%;
+    height : 2.5rem;
     border-radius: 5px;
 }

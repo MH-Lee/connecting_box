@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import Http404, HttpResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .forms import MailBoard
+from .forms import MailBoard, StartUpBoard, ProfessorBoard, FinanceReportBoard
 from django.views.generic import TemplateView, ListView
 from .models import Rescue, EmailContents, ProfessorDev, FinanceReport, StartUp, Tag
 from accounts.models import User
@@ -31,7 +31,7 @@ def rescue_list(request):
                 rescue_obj = Rescue.objects.all().order_by(order_by)
             else:
                 rescue_obj = Rescue.objects.all().order_by('-{}'.format(order_by))
-        else:   
+        else:
             try:
                 rescue_obj = Rescue.objects.filter(
                     Q(area__icontains=query) | Q(case_num__icontains=query) |\
@@ -53,14 +53,14 @@ def rescue_list(request):
     except:
         paginator = Paginator(rescue_obj, 15)
         rescues = None
-    index = rescues.number -1 
-    max_index = len(paginator.page_range) 
-    start_index = index -2 if index >= 2 else 0 
-    if index < 2 : 
-        end_index = 5-start_index 
-    else : 
-        end_index = index+3 if index <= max_index - 3 else max_index 
-    page_range = list(paginator.page_range[start_index:end_index]) 
+    index = rescues.number -1
+    max_index = len(paginator.page_range)
+    start_index = index -2 if index >= 2 else 0
+    if index < 2 :
+        end_index = 5-start_index
+    else :
+        end_index = index+3 if index <= max_index - 3 else max_index
+    page_range = list(paginator.page_range[start_index:end_index])
     return render(request, 'information/rescue_list.html', {'rescues':rescues, 'order_by':order_by , 'direction':direction,\
                                                             'page_range':page_range, 'max_index':max_index-2})
 
@@ -86,7 +86,7 @@ def mail_contents_write(request):
                     continue
                 _tag, created = Tag.objects.get_or_create(name=tag)
                 mail_content.tags.add(_tag)
-            
+
 
             return redirect('/contents/mail_list/')
     else:
@@ -109,9 +109,7 @@ def email_list(request):
                 email_obj = EmailContents.objects.all().order_by('-{}'.format(order_by))
         else:
             try:
-                print(query)
                 email_obj = EmailContents.objects.filter(Q(title__icontains=query) | Q(tags__name__icontains=query)).order_by('-id').distinct()
-                print(email_obj)
                 direction = None
             except:
                 email_obj = EmailContents.objects.all().order_by('-id')
@@ -126,13 +124,13 @@ def email_list(request):
     except:
         paginator = Paginator(email_obj, 15)
         email_contents = None
-    index = email_contents.number -1 
-    max_index = len(paginator.page_range) 
-    start_index = index -2 if index >= 2 else 0 
-    if index < 2 : 
-        end_index = 5-start_index 
-    else : 
-        end_index = index+3 if index <= max_index - 3 else max_index 
+    index = email_contents.number -1
+    max_index = len(paginator.page_range)
+    start_index = index -2 if index >= 2 else 0
+    if index < 2 :
+        end_index = 5-start_index
+    else :
+        end_index = index+3 if index <= max_index - 3 else max_index
     page_range = list(paginator.page_range[start_index:end_index])
     return render(request, 'emailboard/email_list.html', {'email_contents':email_contents, 'order_by':order_by , 'direction':direction,\
                                                           'page_range':page_range, 'max_index':max_index-2})
@@ -143,3 +141,214 @@ def mail_contents_detail(request, pk):
     except EmailContent.DoesNotExist:
         raise Http404('게시글을 찾을 수 없습니다.')
     return render(request, 'emailboard/email_detail.html', {'EmailContent':EmailContent})
+
+
+def professor_dev_write(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
+    if request.method == 'POST':
+        form = ProfessorBoard(request.POST)
+        if form.is_valid():
+            tags = form.cleaned_data['tags']
+            print(tags)
+            professor_dev = ProfessorDev()
+            professor_dev.name = form.cleaned_data['name']
+            professor_dev.university = form.cleaned_data['university']
+            professor_dev.category = form.cleaned_data['category']
+            professor_dev.item = form.cleaned_data['item']
+            professor_dev.news_link = form.cleaned_data['news_link']
+            professor_dev.save()
+
+            for tag in tags:
+                if not tag:
+                    continue
+                _tag, created = Tag.objects.get_or_create(name=tag)
+                professor_dev.tags.add(_tag)
+
+            return redirect('/contents/pd_list/')
+    else:
+        form = ProfessorBoard()
+    return render(request, 'contentsboard/pd_write.html', {'form':form})
+
+def start_up_write(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
+    if request.method == 'POST':
+        form = StartUpBoard(request.POST)
+        if form.is_valid():
+            tags = form.cleaned_data['tags']
+            print(tags)
+            start_up = StartUp()
+            start_up.name = form.cleaned_data['name']
+            start_up.category = form.cleaned_data['category']
+            start_up.item = form.cleaned_data['item']
+            start_up.invest_stage = form.cleaned_data['invest_stage']
+            start_up.investment = form.cleaned_data['investment']
+            start_up.news_link = form.cleaned_data['news_link']
+            start_up.save()
+
+            for tag in tags:
+                if not tag:
+                    continue
+                _tag, created = Tag.objects.get_or_create(name=tag)
+                start_up.tags.add(_tag)
+
+            return redirect('/contents/su_list/')
+    else:
+        form = StartUpBoard()
+    return render(request, 'contentsboard/su_write.html', {'form':form})
+
+def finance_report_write(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
+    if request.method == 'POST':
+        form = FinanceReportBoard(request.POST)
+        if form.is_valid():
+            tags = form.cleaned_data['tags']
+            print(tags)
+            finance_report = FinanceReport()
+            finance_report.security_firm = form.cleaned_data['security_firm']
+            finance_report.title = form.cleaned_data['title']
+            finance_report.category = form.cleaned_data['category']
+            finance_report.news_link = form.cleaned_data['news_link']
+            finance_report.save()
+
+            for tag in tags:
+                if not tag:
+                    continue
+                _tag, created = Tag.objects.get_or_create(name=tag)
+                finance_report.tags.add(_tag)
+
+            return redirect('/contents/fr_list/')
+    else:
+        form = FinanceReportBoard()
+    return render(request, 'contentsboard/fr_write.html', {'form':form})
+
+def professor_dev_list(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+    if request.method == 'GET':
+        query =  request.GET.get('q')
+        order_by = request.GET.get('order_by')
+        direction = request.GET.get('direction')
+        if order_by != None:
+            if direction == 'asc':
+                pd_obj = ProfessorDev.objects.all().order_by(order_by)
+                # print(email_obj)
+            else:
+                pd_obj = ProfessorDev.objects.all().order_by('-{}'.format(order_by))
+        else:
+            try:
+                pd_obj = ProfessorDev.objects.filter(Q(title__icontains=query) | Q(item__icontains=query) |\
+                                                     Q(university__icontains=query) | Q(tags__name__icontains=query)).order_by('-id').distinct()
+                direction = None
+            except:
+                pd_obj = ProfessorDev.objects.all().order_by('-id')
+                direction = None
+    else:
+        pd_obj = ProfessorDev.objects.all().order_by('-id')
+        direction = None
+    page = int(request.GET.get('p',1))
+    try:
+        paginator = Paginator(pd_obj, 15)
+        pd_contents = paginator.get_page(page)
+    except:
+        paginator = Paginator(pd_obj, 15)
+        pd_contents = None
+    index = pd_contents.number -1
+    max_index = len(paginator.page_range)
+    start_index = index -2 if index >= 2 else 0
+    if index < 2 :
+        end_index = 5-start_index
+    else :
+        end_index = index+3 if index <= max_index - 3 else max_index
+    page_range = list(paginator.page_range[start_index:end_index])
+    return render(request, 'contentsboard/pd_list.html', {'pd_contents':pd_contents, 'order_by':order_by , 'direction':direction,\
+                                                             'page_range':page_range, 'max_index':max_index-2})
+
+def start_up_list(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+    if request.method == 'GET':
+        query =  request.GET.get('q')
+        order_by = request.GET.get('order_by')
+        direction = request.GET.get('direction')
+        if order_by != None:
+            if direction == 'asc':
+                su_obj = StartUp.objects.all().order_by(order_by)
+                # print(email_obj)
+            else:
+                su_obj = StartUp.objects.all().order_by('-{}'.format(order_by))
+        else:
+            try:
+                su_obj = StartUp.objects.filter(Q(title__icontains=query) | Q(title__icontains=query) |\
+                                                Q(invest_state__icontains=query) | Q(tags__name__icontains=query)).order_by('-id').distinct()
+                direction = None
+            except:
+                su_obj = StartUp.objects.all().order_by('-id')
+                direction = None
+    else:
+        su_obj = StartUp.objects.all().order_by('-id')
+        direction = None
+    page = int(request.GET.get('p',1))
+    try:
+        paginator = Paginator(su_obj, 15)
+        su_contents = paginator.get_page(page)
+    except:
+        paginator = Paginator(su_obj, 15)
+        su_contents = None
+    index = su_contents.number -1
+    max_index = len(paginator.page_range)
+    start_index = index -2 if index >= 2 else 0
+    if index < 2 :
+        end_index = 5-start_index
+    else :
+        end_index = index+3 if index <= max_index - 3 else max_index
+    page_range = list(paginator.page_range[start_index:end_index])
+    return render(request, 'contentsboard/su_list.html', {'su_contents':su_contents, 'order_by':order_by , 'direction':direction,\
+                                                             'page_range':page_range, 'max_index':max_index-2})
+
+def finance_report_list(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+    if request.method == 'GET':
+        query =  request.GET.get('q')
+        order_by = request.GET.get('order_by')
+        direction = request.GET.get('direction')
+        if order_by != None:
+            if direction == 'asc':
+                fr_obj = FinanceReport.objects.all().order_by(order_by)
+                # print(email_obj)
+            else:
+                fr_obj = FinanceReport.objects.all().order_by('-{}'.format(order_by))
+        else:
+            try:
+                fr_obj = FinanceReport.objects.filter(Q(title__icontains=query) | Q(item__icontains=query) |\
+                                                      Q(tags__name__icontains=query)).order_by('-id').distinct()
+                direction = None
+            except:
+                fr_obj = FinanceReport.objects.all().order_by('-id')
+                direction = None
+    else:
+        fr_obj = FinanceReport.objects.all().order_by('-id')
+        direction = None
+    page = int(request.GET.get('p',1))
+    try:
+        paginator = Paginator(fr_obj, 15)
+        fr_contents = paginator.get_page(page)
+    except:
+        paginator = Paginator(fr_obj, 15)
+        fr_contents = None
+    index = fr_contents.number -1
+    max_index = len(paginator.page_range)
+    start_index = index -2 if index >= 2 else 0
+    if index < 2 :
+        end_index = 5-start_index
+    else :
+        end_index = index+3 if index <= max_index - 3 else max_index
+    page_range = list(paginator.page_range[start_index:end_index])
+    return render(request, 'contentsboard/fr_list.html', {'fr_contents':fr_contents, 'order_by':order_by , 'direction':direction,\
+                                                             'page_range':page_range, 'max_index':max_index-2})

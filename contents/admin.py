@@ -1,13 +1,35 @@
 from django.contrib import admin
-from .models import EmailContents, Tag
+from .models import (
+                     EmailContents,
+                     ProfessorDev,
+                     StartUp,
+                     FinanceReport,
+                     Tag
+                     )
 # Register your models here.
 
 class EmailContentsAdmin(admin.ModelAdmin):
     list_display = ('title', 'registered_dttm')
 
+
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
+class ProfessorDevAdmin(admin.ModelAdmin):
+    list_display = ('name', 'university', 'category')
+
+
+class StartUpAdmin(admin.ModelAdmin):
+    list_display = ('name', 'invest_stage', 'category')
+
+
+class FinanceReportAdmin(admin.ModelAdmin):
+    list_display = ('title', 'security_firm', 'category')
+
+
 admin.site.register(EmailContents, EmailContentsAdmin)
+admin.site.register(ProfessorDev, ProfessorDevAdmin)
+admin.site.register(StartUp, StartUpAdmin)
+admin.site.register(FinanceReport, FinanceReportAdmin)
 admin.site.register(Tag, TagAdmin)
