@@ -1,0 +1,85 @@
+.subtitle form .searchTerm{
+    /* width: 100%; */
+    border: 2px solid rgb(67, 68, 68);
+    border-right: none;
+    padding: 5px;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+}
+
+.subtitle form .searchTerm:focus{
+    color: rgb(67, 68, 68);
+  }
+
+.subtitle form .searchButton{
+    /* width: 100%; */
+    /* width: 45px; */
+    /* height: 45px; */
+    margin-right: 20px;
+    border: 1px solid rgb(67, 68, 68);
+    background: rgb(67, 68, 68);
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.flex-table .col-lg-12 table {
+    width: 100%;
+}
+
+
+td {
+    /* width:520px; */
+        table-layout:fixed;
+         word-wrap:break-word;
+  }
+    .index {
+        text-align: center;
+        width: 10%;
+    }
+    .center {
+        text-align: center;
+        table-layout:fixed;
+        word-break: keep-all; 
+        width: 25%;
+    }
+    .hide {
+        text-align: center;
+    }
+    .tag {
+        width: 30%;
+        text-align: center;
+    }
+    
+
+
+@media screen and (min-width: 768px) and (max-width:1460px){
+        .col-lg-12 table .tag{
+            display: none;
+        }
+        .col-lg-12 table .index {
+            width: 20%;
+        }
+        .col-lg-12 table .center {
+            width: 40%;
+        }
+    }
+
+@media only screen and (max-width: 786px) {
+    .col-lg-12 table .hide{
+        display: none;
+    }
+    .col-lg-12 table .tag{
+        display: none;
+    }
+    .col-lg-12 table .index {
+            width: 20%;
+    }
+    .col-lg-12 table  .center {
+            width: 80%;
+    }
+}

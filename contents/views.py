@@ -242,7 +242,7 @@ def professor_dev_list(request):
                 pd_obj = ProfessorDev.objects.all().order_by('-{}'.format(order_by))
         else:
             try:
-                pd_obj = ProfessorDev.objects.filter(Q(title__icontains=query) | Q(item__icontains=query) |\
+                pd_obj = ProfessorDev.objects.filter(Q(name__icontains=query) | Q(item__icontains=query) |\
                                                      Q(university__icontains=query) | Q(tags__name__icontains=query)).order_by('-id').distinct()
                 direction = None
             except:
@@ -284,8 +284,8 @@ def start_up_list(request):
                 su_obj = StartUp.objects.all().order_by('-{}'.format(order_by))
         else:
             try:
-                su_obj = StartUp.objects.filter(Q(title__icontains=query) | Q(title__icontains=query) |\
-                                                Q(invest_state__icontains=query) | Q(tags__name__icontains=query)).order_by('-id').distinct()
+                su_obj = StartUp.objects.filter(Q(name__icontains=query) | Q(category__icontains=query) |\
+                                                Q(invest_stage__icontains=query) | Q(tags__name__icontains=query)).order_by('-id').distinct()
                 direction = None
             except:
                 su_obj = StartUp.objects.all().order_by('-id')

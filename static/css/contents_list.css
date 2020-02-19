@@ -1,3 +1,38 @@
+body {
+    font-family: 'Noto Sans', sans-serif;
+    background-color: #d6dce5;
+  }
+
+.btn {
+    border-radius: 3px 3px;
+    background: rgb(67, 68, 68);
+    border: 1px solid rgb(67, 68, 68);
+}
+
+.btn:hover {
+  background-color: black;
+  border: solid 1px black;
+}
+
+a {
+  color: inherit;
+  cursor:pointer;
+  text-decoration: none;
+}
+a:hover{
+  color:rgb(67, 68, 68);
+}
+
+h1 {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
 .subtitle form .searchTerm{
     /* width: 100%; */
     border: 2px solid rgb(67, 68, 68);
@@ -39,37 +74,63 @@ td {
   }
     .index {
         text-align: center;
-        width: 10%;
+        width: 9%;
     }
     .center {
         text-align: center;
         table-layout:fixed;
         word-break: keep-all; 
-        width: 40%;
+        width: 14%;
+    }
+    .item {
+        text-align: center;
+        table-layout:fixed;
+        word-break: keep-all; 
     }
     .hide {
         text-align: center;
+        width: 10%;
     }
     .tag {
-        width: 30%;
+        width: 20%;
         text-align: center;
     }
-    
-
-
-@media screen and (min-width: 768px) and (max-width:1460px){
-        .col-lg-12 table .tag{
-            display: none;
-        }
-        .col-lg-12 table .index {
-            width: 20%;
-        }
-        .col-lg-12 table .center {
-            width: 40%;
-        }
+  
+    .page-item.active .page-link {
+        z-index: 1;
+        color: black;
+        background-color: white;
+        border: 1px solid #dee2e6;
     }
 
+@media screen and (min-width: 768px) and (max-width:1460px){
+    h1 {
+        font-size: 28px;
+    }
+    .col-lg-12 table .hide{
+        width: 15%;
+    }
+    .col-lg-12 table .index{
+        display: none;
+    }
+    .col-lg-12 table .tag{
+        display: none;
+    }
+    .col-lg-12 table .center {
+        width: 15%;
+    }
+}
+
 @media only screen and (max-width: 786px) {
+    h1 {
+        font-size: 20px;
+    }
+    td {
+        font-size: 16px;
+    }
+    .col-lg-12 table .index{
+        display: none;
+    }
     .col-lg-12 table .hide{
         display: none;
     }
@@ -77,9 +138,10 @@ td {
         display: none;
     }
     .col-lg-12 table .index {
-            width: 20%;
+            width: 5%;
+            font-size: small;
     }
     .col-lg-12 table  .center {
-            width: 80%;
+            width: 30%;
     }
 }

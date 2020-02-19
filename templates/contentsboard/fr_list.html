@@ -1,0 +1,158 @@
+{% extends "contentsboard/_base_list.html" %}
+{% load static from staticfiles %} 
+{% block search %}
+<form class="form-inline my-2 my-lg-0 justify-content-end"  method="GET" action="{% url 'finance_report_list' %}">
+  {% csrf_token %}
+  <input type="text" class="searchTerm" type="search" name="q" placeholder="Search">
+  <button type="submit" class="searchButton">
+      <i class="fa fa-search"></i>
+  </button>
+</form>
+{% endblock %}
+{% block table %}
+{% if request.user.is_superuser %}
+<button class="btn btn-primary" onclick="location.href='/contents/fr_list/'">글쓰기</button>
+{% else %}
+{% endif %}
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th class="index">id
+          {% if direction == 'asc' %}
+          <a id href="?order_by=id&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+          {% else %}
+          <a id href="?order_by=id&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+          {% endif %}
+      </th>
+      <th class="center">제목
+        {% if direction == 'asc' %}
+        <a id href="?order_by=title&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+        {% else %}
+        <a id href="?order_by=title&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+        {% endif %}
+      </th>
+      <th class="hide">분류
+        {% if direction == 'asc' %}
+        <a id href="?order_by=category&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+        {% else %}
+        <a id href="?order_by=category&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+        {% endif %}
+      </th>
+      <th class="item">증권사
+        {% if direction == 'asc' %}
+        <a id href="?order_by=security_firm&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+        {% else %}
+        <a id href="?order_by=security_firm&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+        {% endif %}
+      </th>
+      <th class="tag">Tag</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    {% for fr in fr_contents %}
+    <tr>
+      <td class="index">{{ fr.id }}</td>
+      <td class="center">{{ fr.security_firm }}</td>
+      <td class="hide">{{ fr.category }}</td>
+      <td><a href="{{ fr.news_link }}">{{ fr.title }}</a></td>
+      <td class="tag">
+        {% for tag in fr.tags.all %} 
+        {% if not forloop.last %}
+        <a href="/contents/pd_list/?q={{tag}}">{{ tag }}</a>,&nbsp;
+        {% else %}
+        <a href="/contents/pd_list/?q={{tag}}">{{ tag }}</a>
+        {% endif %}
+        {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="row mt-2">
+  <div class="col-12">
+    <nav class="pagination-nav">
+      <ul class="pagination justify-content-center">
+        {% if email_contents.has_previous %}
+        <li class="page-item">
+          {% if order_by != None %}
+          <a class="page-link" href="?p=1&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-left"></i></a>
+          {% else %}
+          <a class="page-link" href="?p=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-left"></i></a>
+          {% endif %}
+        </li>
+        <li class="page-item">
+          {% if order_by != None %}
+          <a class="page-link" href="?p={{ email_contents.previous_page_number }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-left"></i></a>
+          {% else %}
+          <a class="page-link" href="?p={{ email_contents.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-left"></i></a>
+          {% endif %}
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link " href="#"><i class="fas fa-angle-double-left"></i></a>
+        </li>
+        <li class="page-item disabled">
+          <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
+        </li>
+        {% endif %}
+        
+        {% if email_contents.number > 2 %} 
+          {% if order_by != None %}
+            <li><a class="page-link" href="?p={{ 1 }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"> 1 </a></li>
+          {% else %}
+            <li><a class="page-link" href="?p={{ 1 }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"> 1 </a></li>
+          {% endif %}
+        <li class="page-link"><span>...<span class="sr-only">...</span></span></li> 
+        {% endif %}
+        
+        {% for i in page_range %} 
+        {% if email_contents.number == i %} 
+        <li class="page-link" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li> 
+        {% else %} 
+          {% if order_by != None %}
+            <li class="page-item active"><a class="page-link" href="?p={{ i }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a></li> 
+          {% else %} 
+            <li class="page-item active"><a class="page-link" href="?p={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a></li> 
+          {% endif %}
+        {% endif %} 
+        {% endfor %} 
+
+        {% if email_contents.number < max_index %} 
+        <li class="page-link"><span>...<span class="sr-only">...</span></span></li> 
+          {% if order_by != None %}
+            <li><a class="page-link" href="?page={{ max_index|add:'2' }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ max_index|add:"2" }}</a></li> 
+          {% else %}
+            <li><a class="page-link" href="?page={{ max_index|add:'2' }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ max_index|add:"2" }}</a></li> 
+          {% endif %}
+        {% endif %}
+
+        {% if email_contents.has_next %}
+        <li class="page-item">
+          {% if order_by != None %}
+          <a class="page-link" href="?p={{ email_contents.next_page_number }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-right"></i></a>
+          {% else %}
+          <a class="page-link" href="?p={{ email_contents.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-right"></i></a>
+          {% endif %}
+        </li>
+        <li class="page-item">
+          {% if order_by != None %}
+          <a class="page-link" href="?p={{ email_contents.paginator.num_pages }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-right"></i></a>
+          {% else %}
+          <a class="page-link" href="?p={{ email_contents.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-right"></i></a>
+          {% endif %}
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link disabled" href="#"><i class="fas fa-chevron-right"></i></a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+</div>
+{% endblock %}

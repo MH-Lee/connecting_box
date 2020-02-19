@@ -3,8 +3,6 @@
 {% block css %}
 <link href="{% static 'css/contents_write.css' %}" rel="stylesheet">
 {% endblock %}
-{% block title %}Professor Development Contents{% endblock %}
-
 {% block table %}
 <div class="row mt-5">
   <div class="col-12">
@@ -28,7 +26,7 @@
       <span style="color:red">{{ field.errors }}</span>
       {% endfor %}
       <button type="submit" class="btn btn-primary">글쓰기</button>
-      <button type="button" class="btn btn-primary" onclick="location.href='/contents/mail_list/'">돌아가기</button>
+      <button type="button" class="btn btn-primary" onclick="location.href='/contents/pd_list/'">돌아가기</button>
     </form>
   </div>
 </div>
