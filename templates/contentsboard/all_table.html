@@ -1,0 +1,25 @@
+{% extends "contentsboard/_base.html" %}
+{% load static from staticfiles %} 
+{% block css %}
+<link href="{% static 'css/contents_all.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}통합자료 조회{% endblock %}
+
+{% block table %}
+<div class=button-set>
+    <button type="button" class="btn btn-secondary btn-lg" onclick='open_in_frame("/contents/su_list")'>스타트업</button>
+    <button type="button" class="btn btn-secondary btn-lg" onclick='open_in_frame("/contents/pd_list")'>교수개발뉴스</button>
+    <button type="button" class="btn btn-secondary btn-lg" onclick='open_in_frame("/contents/fr_list")'>증권사리포트</button>
+</div>
+<iframe id='my_frame' width=100% frameBorder="0" style="height: 100vh; width:77vw" src="/contents/su_list"></iframe>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    function open_in_frame(url) {
+        $('#my_frame').attr('src', url);
+    }
+</script>
+{% endblock %}

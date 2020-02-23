@@ -68,9 +68,9 @@
       <td class="tag">
         {% for tag in su.tags.all %} 
         {% if not forloop.last %}
-        <a href="/contents/pd_list/?q={{tag}}">{{ tag }}</a>,&nbsp;
+        <a href="/contents/su_list/?q={{tag}}">{{ tag }}</a>,&nbsp;
         {% else %}
-        <a href="/contents/pd_list/?q={{tag}}">{{ tag }}</a>
+        <a href="/contents/su_list/?q={{tag}}">{{ tag }}</a>
         {% endif %}
         {% endfor %}
       </td>

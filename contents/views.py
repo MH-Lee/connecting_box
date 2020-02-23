@@ -227,6 +227,10 @@ def finance_report_write(request):
         form = FinanceReportBoard()
     return render(request, 'contentsboard/fr_write.html', {'form':form})
 
+def all_table(request):
+    return render(request, 'contentsboard/all_table.html')
+
+
 def professor_dev_list(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/login/')
