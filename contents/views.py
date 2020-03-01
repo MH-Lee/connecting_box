@@ -12,12 +12,15 @@ import pandas as pd
 def home(request):
     return render(request, 'home.html')
 
+def total_search(request):
+    pass
+
 def rescue_detail(request, pk):
     try:
         rescue = Rescue.objects.get(pk=pk)
     except Rescue.DoesNotExist:
         raise Http404('게시글을 찾을 수 없습니다.')
-    return render(request, 'contents/rescue_detail.html', {'rescue':rescue})
+    return render(request, 'rescue/rescue_detail.html', {'rescue':rescue})
 
 def rescue_list(request):
     if not request.user.is_authenticated:
@@ -61,7 +64,7 @@ def rescue_list(request):
     else :
         end_index = index+3 if index <= max_index - 3 else max_index
     page_range = list(paginator.page_range[start_index:end_index])
-    return render(request, 'information/rescue_list.html', {'rescues':rescues, 'order_by':order_by , 'direction':direction,\
+    return render(request, 'rescue/rescue_list.html', {'rescues':rescues, 'order_by':order_by , 'direction':direction,\
                                                             'page_range':page_range, 'max_index':max_index-2})
 
 
@@ -228,6 +231,8 @@ def finance_report_write(request):
     return render(request, 'contentsboard/fr_write.html', {'form':form})
 
 def all_table(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
     return render(request, 'contentsboard/all_table.html')
 
 

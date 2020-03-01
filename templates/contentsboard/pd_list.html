@@ -39,13 +39,14 @@
         <a id href="?order_by=university&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
         {% endif %}
       </th>
-      <th class="item">뉴스기사
+      <th class="item">세부아이템
         {% if direction == 'asc' %}
         <a id href="?order_by=item&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
         {% else %}
         <a id href="?order_by=item&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
         {% endif %}
       </th>
+      <th class="link">link</th>
       <th class="tag">Tag</th>
     </tr>
 
@@ -56,7 +57,8 @@
       <td class="index">{{ prof_dev.id }}</td>
       <td class="center">{{ prof_dev.name }}</td>
       <td class="hide">{{ prof_dev.university }}</td>
-      <td><a href="{{ prof_dev.news_link }}">{{ prof_dev.item }}</a></td>
+      <td>{{ prof_dev.item }}</td>
+      <th class="link"><a href="{{ prof_dev.news_link }}" target="_blank"><i class="far fa-newspaper"></i></a></th>
       <td class="tag">
         {% for tag in prof_dev.tags.all %} 
         {% if not forloop.last %}

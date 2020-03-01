@@ -1,0 +1,178 @@
+{% extends "rescue/_base.html" %}
+{% load static from staticfiles %} 
+
+{% block title %}회생법원 리스트(관리자용){% endblock %}
+
+
+{% block search %}
+<div class="api-view">
+  {% if request.user.is_superuser %}
+  <button type="submit" class="btn btn-primary" onclick="location.href='/contents/api/rescue/'">API 보기</button>
+  {% else %}
+  {% endif %}
+</div>
+<form class="form-inline my-2 my-lg-0 justify-content-end"  method="GET" action="{% url 'rescue_list' %}">
+  {% csrf_token %}
+    <input type="text" class="searchTerm" type="search" name="q" placeholder="Search">
+    <button type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+    </button>
+</form>
+{% endblock %}
+
+{% block table %}
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th class="area">법원
+          {% if direction == 'asc' %}
+          <a id href="?order_by=area&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+          {% else %}
+          <a id href="?order_by=area&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+          {% endif %}
+        </th>
+        <th class="hide">사건번호
+          {% if direction == 'asc' %}
+          <a id href="?order_by=case_num&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+          {% else %}
+          <a id href="?order_by=case_num&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+          {% endif %}
+        </th>
+        <th class="company">회사이름
+          {% if direction == 'asc' %}
+          <a id href="?order_by=company_name&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+          {% else %}
+          <a id href="?order_by=company_name&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+          {% endif %}
+        </th>
+        <th class="date">공시일자
+          {% if direction == 'asc' %}
+          <a id href="?order_by=date&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+          {% else %}
+          <a id href="?order_by=date&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+          {% endif %}
+        </th>
+        <th class="center">제목
+          {% if direction == 'asc' %}
+          <a id href="?order_by=subject&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+          {% else %}
+          <a id href="?order_by=subject&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+          {% endif %}
+        </th>
+        <th class="category">카테고리
+          <a href=""><i class="fa fa-fw fa-sort"></i></a>
+        </th>
+        <th>link</th>
+      </tr>
+  
+    </thead>
+    <tbody>
+        {% for rescue in rescues %}
+        <tr>
+          <td class="area">{{ rescue.area }}</td>
+          <td class="hide">{{ rescue.case_num }}</td>
+          <td class="company">{{ rescue.company_name }}</td>
+          <td class="date">{{ rescue.date }}</td>
+          {% if rescue.contents == 'nan' %}
+          <td>{{ rescue.subject }}</td>
+          {% else %}
+          <td class="center"><a href="/contents/rescue_detail/{{ rescue.id }}">{{ rescue.subject }}</a></td>
+          {% endif %}
+          <td  class="category">{{ rescue.category }}</td>
+          {% if rescue.news_url == 'None' %}
+          <td></td>
+          {% elif 'https://help.naver.com/support/' in rescue.news_url %}
+          <td></td>
+          {% else %}
+          <td><a href="{{ rescue.news_url }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="far fa-newspaper"></i></a></td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  <div class="row mt-2">
+    <div class="col-12">
+      <nav class="pagination-nav">
+        <ul class="pagination justify-content-center">
+          {% if rescues.has_previous %}
+          <li class="page-item">
+            {% if order_by != None %}
+            <a class="page-link" href="?p=1&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-left"></i></a>
+            {% else %}
+            <a class="page-link" href="?p=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-left"></i></a>
+            {% endif %}
+          </li>
+          <li class="page-item">
+            {% if order_by != None %}
+            <a class="page-link" href="?p={{ rescues.previous_page_number }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-left"></i></a>
+            {% else %}
+            <a class="page-link" href="?p={{ rescues.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-left"></i></a>
+            {% endif %}
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+              <a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
+          </li>
+          {% endif %}
+          
+          {% if rescues.number > 2 %} 
+            {% if order_by != None %}
+              <li><a class="page-link" href="?p={{ 1 }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"> 1 </a></li>
+            {% else %}
+              <li><a class="page-link" href="?p={{ 1 }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"> 1 </a></li>
+            {% endif %}
+          <li class="page-link"><span>...<span class="sr-only">...</span></span></li> 
+          {% endif %}
+          
+          {% for i in page_range %} 
+          {% if email_contents.number == i %} 
+          <li class="page-link" class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li> 
+          {% else %} 
+            {% if order_by != None %}
+              <li class="page-item active"><a class="page-link" href="?p={{ i }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a></li> 
+            {% else %} 
+              <li class="page-item active"><a class="page-link" href="?p={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a></li> 
+            {% endif %}
+          {% endif %} 
+          {% endfor %} 
+  
+          {% if rescues.number < max_index %} 
+          <li class="page-link"><span>...<span class="sr-only">...</span></span></li> 
+            {% if order_by != None %}
+              <li><a class="page-link" href="?page={{ max_index|add:'2' }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ max_index|add:"2" }}</a></li> 
+            {% else %}
+              <li><a class="page-link" href="?page={{ max_index|add:'2' }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ max_index|add:"2" }}</a></li> 
+            {% endif %}
+          {% endif %}
+  
+          {% if rescues.has_next %}
+          <li class="page-item">
+            {% if order_by != None %}
+            <a class="page-link" href="?p={{ rescues.next_page_number }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-right"></i></a>
+            {% else %}
+            <a class="page-link" href="?p={{ rescues.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-chevron-right"></i></a>
+            {% endif %}
+          </li>
+          <li class="page-item">
+            {% if order_by != None %}
+            <a class="page-link" href="?p={{ rescues.paginator.num_pages }}&order_by={{ order_by }}&direction={{ direction }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-right"></i></a>
+            {% else %}
+            <a class="page-link" href="?p={{ rescues.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-right"></i></a>
+            {% endif %}
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link disabled" href="#"><i class="fas fa-chevron-right"></i></a>
+          </li>
+          <li class="page-item disabled">
+              <a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+{% endblock %}

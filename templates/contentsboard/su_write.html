@@ -1,4 +1,4 @@
-{% extends "contentsboard/_base.html" %}
+{% extends "contentsboard/_base_list.html" %}
 {% load static from staticfiles %} 
 {% block css %}
 <link href="{% static 'css/contents_write.css' %}" rel="stylesheet">
@@ -30,7 +30,7 @@
       <span style="color:red">{{ field.errors }}</span>
       {% endfor %}
       <button type="submit" class="btn btn-primary">글쓰기</button>
-      <button type="button" class="btn btn-primary" onclick="location.href='/contents/mail_list/'">돌아가기</button>
+      <button type="button" class="btn btn-primary" onclick="location.href='/contents/su_list/'">돌아가기</button>
     </form>
   </div>
 </div>

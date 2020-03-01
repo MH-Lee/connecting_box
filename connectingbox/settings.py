@@ -55,13 +55,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Django Restframework (API Template)
+    'rest_framework',
 ]
 
 INSTALLED_APPS += [
     'contents',
     'accounts',
-    'taggit.apps.TaggitAppConfig',
-    'taggit_templatetags2'
+    # 'taggit.apps.TaggitAppConfig',
+    # 'taggit_templatetags2'
 ]
 
 MIDDLEWARE = [

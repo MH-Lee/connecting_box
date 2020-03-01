@@ -1,0 +1,113 @@
+.subtitle form .searchTerm{
+    /* width: 100%; */
+    border: 2px solid rgb(67, 68, 68);
+    border-right: none;
+    padding: 5px;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+}
+
+.subtitle form .searchTerm:focus{
+    color: rgb(67, 68, 68);
+  }
+
+.subtitle form .searchButton{
+    /* width: 100%; */
+    /* width: 45px; */
+    /* height: 45px; */
+    margin-right: 20px;
+    border: 1px solid rgb(67, 68, 68);
+    background: rgb(67, 68, 68);
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.api-view {
+    margin-left: 1rem;
+}
+
+.flex-table .col-lg-12 table {
+    width: 100%;
+}
+
+
+td {
+    /* width:520px; */
+        table-layout:fixed;
+         word-wrap:break-word;
+  }
+    .area {
+        text-align: center;
+        table-layout:fixed;
+        word-break: keep-all; 
+        width: 8%;
+    }
+    .center {
+        text-align: center;
+        table-layout:fixed;
+        word-break: keep-all; 
+        width: 20%;
+    }
+    .company {
+        text-align: center;
+        width: 20%;
+    }
+    .date {
+        text-align: center;
+        width: 13%;
+    }
+    .category{
+        text-align: center;
+    }
+    .hide {
+        text-align: center;
+        width: 15%;
+    }
+
+.page-item.active .page-link{
+    color: #fff;
+    background-color: rgba(1, 0, 5, 0.616);
+    border-color: rgba(1, 0, 5, 0.616);
+}
+
+.page-link{
+    color: rgba(1, 0, 5, 0.616);
+}
+
+@media screen and (min-width: 768px) and (max-width:1460px){
+        .col-lg-12 table .area { 
+            width: 10%;
+        }
+        .col-lg-12 table .center {
+            width: 40%;
+        }
+        .col-lg-12 table .category{
+            display: none;
+        }
+    }
+
+@media only screen and (max-width: 786px) {
+    .col-lg-12 table .company {
+        width: 25%;
+    }
+    .col-lg-12 table .center {
+        width: 40%;
+    }
+    .col-lg-12 table .date {
+        width: 25%;
+    }
+    .col-lg-12 table .area{
+        display: none;
+    }
+    .col-lg-12 table .hide{
+        display: none;
+    }
+    .col-lg-12 table .category{
+        display: none;
+    }
+}

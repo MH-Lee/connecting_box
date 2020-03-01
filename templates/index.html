@@ -31,7 +31,12 @@
                     <li><a href="/accounts/register/">Register</a></li>
                     <li><a href="/accounts/login/">Sign in</a></li>
                     {% endif %}
+                    <li><a href="/contents/table/">통합자료</a></li>
                     <li><a href="/contents/mail_list/">Mail Contents</a></li>
+                    {% if request.user.is_superuser %}
+                    <li><a href="/contents/rescue_list/">회생기업(관리자)</a></li>
+                    {% else %}
+                    {% endif %}
                   </ul>
                 </nav>
             </header>

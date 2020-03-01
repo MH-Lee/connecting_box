@@ -55,7 +55,17 @@ td {
         text-align: center;
     }
     
-
+    .page-item.active .page-link {
+        z-index: 1;
+        color: black;
+        background-color: white;
+        border: 1px solid #dee2e6;
+    }
+    
+    .page-link{
+        color: rgba(1, 0, 5, 0.616);
+    }
+    
 
 @media screen and (min-width: 768px) and (max-width:1460px){
         .col-lg-12 table .tag{

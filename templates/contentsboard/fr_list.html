@@ -11,7 +11,7 @@
 {% endblock %}
 {% block table %}
 {% if request.user.is_superuser %}
-<button class="btn btn-primary" onclick="location.href='/contents/fr_list/'">글쓰기</button>
+<button class="btn btn-primary" onclick="location.href='/contents/fr_write/'">글쓰기</button>
 {% else %}
 {% endif %}
 <table class="table">
@@ -24,7 +24,7 @@
           <a id href="?order_by=id&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
           {% endif %}
       </th>
-      <th class="center">제목
+      <th class="center">증권사
         {% if direction == 'asc' %}
         <a id href="?order_by=title&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
         {% else %}
@@ -38,13 +38,14 @@
         <a id href="?order_by=category&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
         {% endif %}
       </th>
-      <th class="item">증권사
+      <th class="item">세부아이템
         {% if direction == 'asc' %}
         <a id href="?order_by=security_firm&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
         {% else %}
         <a id href="?order_by=security_firm&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
         {% endif %}
       </th>
+      <th class="link">link</th>
       <th class="tag">Tag</th>
     </tr>
 
@@ -55,7 +56,8 @@
       <td class="index">{{ fr.id }}</td>
       <td class="center">{{ fr.security_firm }}</td>
       <td class="hide">{{ fr.category }}</td>
-      <td><a href="{{ fr.news_link }}">{{ fr.title }}</a></td>
+      <td>{{ fr.title }}</td>
+      <th class="link"><a href="{{ fr.news_link }}" target="_blank"><i class="far fa-newspaper"></i></a></th>
       <td class="tag">
         {% for tag in fr.tags.all %} 
         {% if not forloop.last %}
