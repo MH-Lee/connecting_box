@@ -6,4 +6,4 @@ jQuery(document).ready(function($) {
     // open the menu with slide effect
     $("#navigation-list").slideToggle(300);
     });
-    });
+});

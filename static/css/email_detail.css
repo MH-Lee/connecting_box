@@ -21,17 +21,23 @@
         /* background-color: dodgerblue; */
         text-align: center;
         padding: 0.5rem 0;
-        width: 40%;
+        width: 30%;
         border-bottom: black 1px solid;
     }
     .item2 .item2_2 {
         /* background-color: aqua; */
         text-align: center;
         padding: 0.5rem 0;
-        width: 40%;
+        width: 30%;
         border-bottom: black 1px solid;
     }
-
+    .item2 .item2_3 {
+        /* background-color: aqua; */
+        text-align: center;
+        padding: 0.5rem 0;
+        width: 30%;
+        border-bottom: black 1px solid;
+    }
 
 .col-lg-12 .item3 {
     /* background-color: green; */
@@ -47,21 +53,32 @@
 
     .item4 .item4_1 {
         padding: 0.5rem 0;
-        width: 29%;
+        width: 6%;
+        /* background-color: darkblue; */
         height: 3rem;
     }
     .item4 .item4_2 {
         padding: 0.5rem 0;
-        width: 29%;
+        width: 42%;
+        height: 3rem;
+    }
+    .item4 .item4_3 {
+        padding: 0.5rem 0;
+        width: 10%;
+        /* background-color: darkblue; */
         height: 3rem;
     }
 
+
 @media ( max-width: 768px ) {
     .item2 .item2_1 {
-        width: 50%;
+        width: 30%;
     }
     .item2 .item2_2 {
-        width: 50%;
+        width: 40%;
+    }
+    .item2 .item2_3 {
+        width: 30%;
     }
     .item4 .item4_1 {
         width: 50%;

@@ -8,8 +8,10 @@ urlpatterns = [
     path('mail_list/', views.email_list, name='email_list'),
     path('mail_write/', views.mail_contents_write, name='email_write'),
     path('mail_detail/<int:pk>', views.mail_contents_detail, name='mail_detail'),
+    path('mail_like/', views.emailcontent_like, name='email_like'),
 
-    path('table/', views.all_table),
+    path('table/', views.all_table, name='contents_all'),
+    path('total_search/', views.total_search, name='total_search'),
 
     path('pd_list/', views.professor_dev_list, name='professor_dev_list'),
     path('pd_write/', views.professor_dev_write, name='professor_dev_write'),

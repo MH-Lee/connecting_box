@@ -110,7 +110,7 @@ td {
         color: rgba(1, 0, 5, 0.616);
     }
     
-@media screen and (min-width: 768px) and (max-width:1460px){
+@media screen and (min-width: 786px) and (max-width:1180px){
     h1 {
         font-size: 24px;
     }

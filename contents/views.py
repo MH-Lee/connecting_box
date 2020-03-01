@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
-from django.http import Http404, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .forms import MailBoard, StartUpBoard, ProfessorBoard, FinanceReportBoard
 from django.views.generic import TemplateView, ListView
+from django.views.decorators.http import require_POST
+from .forms import MailBoard, StartUpBoard, ProfessorBoard, FinanceReportBoard
 from .models import Rescue, EmailContents, ProfessorDev, FinanceReport, StartUp, Tag
 from accounts.models import User
 import pandas as pd
@@ -13,7 +14,11 @@ def home(request):
     return render(request, 'home.html')
 
 def total_search(request):
-    pass
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+    if request.method == 'GET':
+        query =  request.GET.get('q')
+    return render(request, 'contentsboard/total_search.html', {'query':query})
 
 def rescue_detail(request, pk):
     try:
@@ -141,10 +146,27 @@ def email_list(request):
 def mail_contents_detail(request, pk):
     try:
         EmailContent = EmailContents.objects.get(pk=pk)
+        is_liked = False
+        
+        if EmailContent.likes.filter(id=request.user.id).exists():
+            is_liked = True
     except EmailContent.DoesNotExist:
         raise Http404('게시글을 찾을 수 없습니다.')
-    return render(request, 'emailboard/email_detail.html', {'EmailContent':EmailContent})
+    return render(request, 'emailboard/email_detail.html', {'EmailContent':EmailContent, 'is_liked':is_liked, 'total_likes':EmailContent.total_likes()})
 
+@require_POST
+def emailcontent_like(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+    EmailContent = get_object_or_404(EmailContents, id=request.POST.get('email_contetns_id'))
+    is_liked = EmailContent.likes.filter(id=request.user.id).exists()
+
+    if is_liked:
+        EmailContent.likes.remove(request.user)
+    else:
+        EmailContent.likes.add(request.user)
+
+    return HttpResponseRedirect(reverse('mail_detail', kwargs={'pk': EmailContent.id}))
 
 def professor_dev_write(request):
     if not request.user.is_authenticated:
@@ -335,7 +357,7 @@ def finance_report_list(request):
                 fr_obj = FinanceReport.objects.all().order_by('-{}'.format(order_by))
         else:
             try:
-                fr_obj = FinanceReport.objects.filter(Q(title__icontains=query) | Q(item__icontains=query) |\
+                fr_obj = FinanceReport.objects.filter(Q(title__icontains=query) | Q(security_firm__icontains=query) |\
                                                       Q(tags__name__icontains=query)).order_by('-id').distinct()
                 direction = None
             except:

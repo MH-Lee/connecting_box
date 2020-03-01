@@ -13,8 +13,8 @@
        <div class="link-1"><a href="/contents/table/">통합자료</a></div>
        <div class="link-2"><a href="/contents/mail_list/">MAIL</a></div>
    </div>
-    <div class="search">
-       <input type="text" class="searchTerm" placeholder="Search">
+    <form id="totalform" class="search" method="GET" action="{% url 'total_search' %}">
+       <input id="totalSearch" type="search" name="q" class="searchTerm" placeholder="Search">
        <button type="submit" class="searchButton">
          <i class="fa fa-search"></i>
       </button>
@@ -24,5 +24,21 @@
 {% endblock %}
 
 {% block js %}
-
+<script>   
+   $('#totalform').submit(function() {
+    if($('#totalSearch').val() == ''){
+      alert("검색어를 입력해주세요");
+      return false;
+    } 
+   //  else {
+   //    var query = $('#totalSearch').val();
+   //    var url = "{% url 'contents_all' %}";
+   //    console.log(url);
+   //    console.log(query);
+   //    var redirect_url = url + '?q=' + query;
+   //    console.log(redirect_url);
+   //    window.location.href = '/contents/table/?q=' + query;
+   //  }
+});
+</script>
 {% endblock %}

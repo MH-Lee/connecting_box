@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from .choice_dic import choice_dic
+from accounts.models import User
 
 # Create your models here.
 class RescueUpdateCheck(models.Model):
@@ -50,9 +51,13 @@ class EmailContents(models.Model):
     registered_dttm = models.DateTimeField(auto_now_add=True,
                                         verbose_name='등록시간')
     tags = models.ManyToManyField('contents.Tag', verbose_name='태그')
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
     def __str__(self):
         return "{}-{}".format(self.title, self.registered_dttm)
+    
+    def total_likes(self):
+        return self.likes.count()
 
     class Meta:
         db_table = 'email-contents'
