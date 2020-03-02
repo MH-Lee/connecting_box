@@ -98,7 +98,10 @@ td {
         width: 20%;
         text-align: center;
     }
-  
+    .smart-phone {
+        display: none;
+    }
+
     .page-item.active .page-link {
         z-index: 1;
         color: black;
@@ -131,7 +134,7 @@ td {
     }
 }
 
-@media only screen and (max-width: 786px) {
+@media only screen and (min-width: 480px) and (max-width: 786px) {
     h1 {
         font-size: 20px;
     }
@@ -148,10 +151,60 @@ td {
         display: none;
     }
     .col-lg-12 table .index {
-            width: 5%;
-            font-size: small;
+        width: 5%;
+        font-size: small;
     }
     .col-lg-12 table  .center {
-            width: 28%;
+        width: 28%;
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 786px) {
+    h1 {
+        font-size: 20px;
+    }
+    td {
+        font-size: 10px;
+    }
+    .col-lg-12 table .index{
+        display: none;
+    }
+    .col-lg-12 table .hide{
+        display: none;
+    }
+    .col-lg-12 table .tag{
+        display: none;
+    }
+    .col-lg-12 table  .center {
+        width: 28%;
+    }
+}
+
+
+@media only screen and (min-width: 200px) and (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+    td {
+        font-size: 10px;
+    }
+    .col-lg-12 table .index{
+        display: none;
+    }
+    .col-lg-12 table .hide{
+        display: none;
+    }
+    .col-lg-12 table .tag{
+        display: none;
+    }
+    .col-lg-12 table .smart-hide {
+        display: none;
+    }
+    .col-lg-12 table .smart-phone {
+        display: table-cell;
+        width: 40%;
+    }
+    .col-lg-12 table .center {
+        width: 40%;
     }
 }

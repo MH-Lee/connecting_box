@@ -88,6 +88,7 @@
 
 
 /* responsiv page code */
+
 @media screen and (min-width: 768px) and (max-width:1460px){
     .wrap{
       width: 50%;
@@ -103,7 +104,7 @@
     }
 }
 
-@media ( max-width: 768px ) {
+@media screen and (min-width : 480px) and ( max-width: 768px ) {
   .wrap{
     width: 70%;
   }
@@ -117,9 +118,44 @@
     width: 80%;
   }
   .tag-rank button {
+    font-size: 10px;
+  }
+  .tag-rank button:last-child{
+    display: none;
+  }
+}
+
+/* 스마트폰 가로+세로 */
+@media only screen and (min-width : 320px) and (max-width : 480px){
+  .wrap{
+    width: 100%;
+  }
+  .wrap .main-title {
+    font-size: 30px;
+  }
+  .searchTerm {
+    width: 80%;
+  }
+  .wrap .link {
+    width: 100%;
+  }
+  .link .link-1 {
+    width: 40%;
+  }
+  .link .link-2 {
+    width: 40%;
+  }
+
+  .wrap .tag-rank {
+    width: 90%;
+  }
+  .tag-rank button {
     font-size: 12px;
   }
   .tag-rank button:last-child{
+    display: none;
+  }
+  .tag-rank button:nth-child(5) {
     display: none;
   }
 }

@@ -9,6 +9,12 @@
 
 .col-lg-12 .button-set{
     margin: 5rem 0 0 1.8rem;
+    background-color: blueviolet;
+}
+
+iframe {
+    height: 130vh; 
+    width:77vw
 }
 
 @media screen and (min-width: 786px) and (max-width:1180px){
@@ -21,7 +27,7 @@
     
 }
 
-@media only screen and (max-width: 786px) {
+@media only screen and (min-width: 480px)  and (max-width: 786px) {
     h1 {
         font-size: 20px;
     }
@@ -31,5 +37,23 @@
 
     .btn {
         font-size: 16px;
+    }
+}
+
+@media only screen and (min-width: 200px)  and (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+    .col-lg-12 .button-set{
+        width: 100%;
+        margin: 3rem 0 0 1.8rem;
+    }
+    .btn {
+        font-size: 14px;
+        padding: 8px 5px 8px 5px;
+    }
+    iframe {
+        height: 130vh; 
+        width: 90vw
     }
 }

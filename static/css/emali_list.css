@@ -79,7 +79,7 @@ td {
         }
     }
 
-@media only screen and (max-width: 786px) {
+@media only screen and (min-width: 480px) and (max-width: 786px) {
     .col-lg-12 table .hide{
         display: none;
     }
@@ -91,5 +91,24 @@ td {
     }
     .col-lg-12 table  .center {
             width: 80%;
+    }
+}
+
+
+@media only screen and (min-width: 321px) and (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+    .col-lg-12 table .hide{
+        display: none;
+    }
+    .col-lg-12 table .tag{
+        display: none;
+    }
+    .col-lg-12 table .index {
+        width: 20%;
+    }
+    .col-lg-12 table  .center {
+        width: 80%;
     }
 }

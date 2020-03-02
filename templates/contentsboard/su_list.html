@@ -43,7 +43,14 @@
         <a id href="?order_by=invest_stage&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
         {% endif %}
       </th>
-      <th class="item">세부아이템
+      <th class="smart-hide">세부아이템
+        {% if direction == 'asc' %}
+        <a id href="?order_by=item&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
+        {% else %}
+        <a id href="?order_by=item&direction=asc"><i class="fa fa-fw fa-sort"></i></a>
+        {% endif %}
+      </th>
+      <th class="smart-phone">아이템
         {% if direction == 'asc' %}
         <a id href="?order_by=item&direction=desc"><i class="fa fa-fw fa-sort"></i></a>
         {% else %}
@@ -61,7 +68,8 @@
       <td class="index">{{ su.id }}</td>
       <td class="center">{{ su.name }}</td>
       <td class="hide">{{ su.invest_stage }}</td>
-      <td>{{ su.item }}</td>
+      <td class="smart-hide">{{ su.item }}</td>
+      <td class="smart-phone">{{ su.category }}</td>
       <th class="link"><a href="{{ su.news_link }}" target="_blank"><i class="far fa-newspaper"></i></a></th>
       <td class="tag">
         {% for tag in su.tags.all %} 
