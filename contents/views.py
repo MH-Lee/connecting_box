@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.views.generic import TemplateView, ListView
 from django.views.decorators.http import require_POST
 from .forms import MailBoard, StartUpBoard, ProfessorBoard, FinanceReportBoard
@@ -11,7 +11,13 @@ import pandas as pd
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    pd_count = Tag.objects.annotate(tag_count=Count('professordev')) 
+    su_count = Tag.objects.annotate(tag_count=Count('startup')) 
+    fr_count = Tag.objects.annotate(tag_count=Count('financereport')) 
+    pd_top_rank = dict(pd_count.filter(tag_count__gt=0).order_by('tag_count')[0:5].values_list('name', 'tag_count'))
+    su_top_rank = dict(su_count.filter(tag_count__gt=0).order_by('tag_count')[0:5].values_list('name', 'tag_count'))
+    fr_top_rank = dict(fr_count.filter(tag_count__gt=0).order_by('tag_count')[0:5].values_list('name', 'tag_count'))
+    return render(request, 'home.html', {'pd_top_rank' : pd_top_rank, 'su_top_rank':su_top_rank, 'fr_top_rank':fr_top_rank})
 
 def total_search(request):
     if not request.user.is_authenticated:
@@ -298,7 +304,7 @@ def professor_dev_list(request):
         end_index = index+3 if index <= max_index - 3 else max_index
     page_range = list(paginator.page_range[start_index:end_index])
     return render(request, 'contentsboard/pd_list.html', {'pd_contents':pd_contents, 'order_by':order_by , 'direction':direction,\
-                                                             'page_range':page_range, 'max_index':max_index-2})
+                                                          'page_range':page_range, 'max_index':max_index-2, 'query':query})
 
 def start_up_list(request):
     if not request.user.is_authenticated:
@@ -324,6 +330,7 @@ def start_up_list(request):
     else:
         su_obj = StartUp.objects.all().order_by('-id')
         direction = None
+        query = None
     page = int(request.GET.get('p',1))
     try:
         paginator = Paginator(su_obj, 15)
@@ -340,7 +347,7 @@ def start_up_list(request):
         end_index = index+3 if index <= max_index - 3 else max_index
     page_range = list(paginator.page_range[start_index:end_index])
     return render(request, 'contentsboard/su_list.html', {'su_contents':su_contents, 'order_by':order_by , 'direction':direction,\
-                                                             'page_range':page_range, 'max_index':max_index-2})
+                                                          'page_range':page_range, 'max_index':max_index-2, 'query':query})
 
 def finance_report_list(request):
     if not request.user.is_authenticated:
@@ -382,4 +389,4 @@ def finance_report_list(request):
         end_index = index+3 if index <= max_index - 3 else max_index
     page_range = list(paginator.page_range[start_index:end_index])
     return render(request, 'contentsboard/fr_list.html', {'fr_contents':fr_contents, 'order_by':order_by , 'direction':direction,\
-                                                             'page_range':page_range, 'max_index':max_index-2})
+                                                          'page_range':page_range, 'max_index':max_index-2, 'query':query})

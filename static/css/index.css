@@ -73,6 +73,18 @@
     font-size: 20px;
   }
   
+  .wrap .tag-rank {
+    width: 54%;
+    display: inline-block;
+    text-align: left;
+    font-weight: bold;
+    /* background-color: blueviolet; */
+    padding: 0.5rem 0;
+  }
+  div > div:nth-child(4) {
+    margin-top: 2rem;
+    /* background-color: blue; */
+  }
 
 
 /* responsiv page code */
@@ -84,9 +96,11 @@
       font-size: 45px;
     }
     .searchTerm {
-      width: 80%;
+      width: 50%;
     }
-    
+    .tag-rank button {
+      font-size: 14px;
+    }
 }
 
 @media ( max-width: 768px ) {
@@ -97,6 +111,15 @@
     font-size: 35px;
   }
   .searchTerm {
-    width: 60%;
+    width: 70%;
+  }
+  .wrap .tag-rank {
+    width: 80%;
+  }
+  .tag-rank button {
+    font-size: 12px;
+  }
+  .tag-rank button:last-child{
+    display: none;
   }
 }

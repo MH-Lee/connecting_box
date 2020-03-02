@@ -11,3 +11,25 @@
     margin: 5rem 0 0 1.8rem;
 }
 
+@media screen and (min-width: 786px) and (max-width:1180px){
+    h1 {
+        font-size: 26px;
+    }
+    .col-lg-12 .button-set{
+        margin: 3rem 0 0 1.8rem;
+    }
+    
+}
+
+@media only screen and (max-width: 786px) {
+    h1 {
+        font-size: 20px;
+    }
+    .col-lg-12 .button-set{
+        margin: 3rem 0 0 1.8rem;
+    }
+
+    .btn {
+        font-size: 16px;
+    }
+}

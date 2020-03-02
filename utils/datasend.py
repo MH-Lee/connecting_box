@@ -36,7 +36,7 @@ def nan_remove(data):
 # data['date'] = data['date'].apply(lambda x:str(x).replace('.','-'))
 
 def rescue_send():
-    data = pd.read_excel('./utils/data/transfer.xlsx')
+    data = pd.read_excel('./utils/data/transfer2.xlsx')
     data.sort_values(by=['date'], inplace=True)
     data['date'] = data['date'].apply(lambda x:str(x).replace('.','-'))
     rescue_list = []
@@ -49,16 +49,17 @@ def rescue_send():
         subject = data.iloc[i,5]
         category = data.iloc[i,6]
         contents = data.iloc[i,7]
-        news_title = data.iloc[i,8]
-        news_url = data.iloc[i,9]
-        address = data.iloc[i,10]
+        ceo = data.iloc[i,8]
+        news_title = data.iloc[i,9]
+        news_url = data.iloc[i,10]
+        address = data.iloc[i,11]
         if i % 200 == 0:
             print(date)
             print(address)
         # writer = User.objects.get(username='admin')
         rescue_obj = Rescue(date=date, area=area, case_num=case_num, company_name=company_name, \
                             court=court, subject=subject, category=category, contents=contents,\
-                            news_title=news_title, news_url=news_url, company_address=address)
+                            news_title=news_title, news_url=news_url, company_address=address, ceo=ceo)
         rescue_list.append(rescue_obj)
     Rescue.objects.bulk_create(rescue_list)
     print('회생법인 업로드')

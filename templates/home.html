@@ -18,8 +18,35 @@
        <button type="submit" class="searchButton">
          <i class="fa fa-search"></i>
       </button>
-    </div>
- </div>
+   </form>
+   <div class="tag-rank">
+      <p>스타트 업 상위 태그</p> 
+      {% for key, value in su_top_rank.items %}
+      <button type="button" class="btn btn-secondary" onclick="location.href='/contents/total_search/?q={{ key }}'">
+         {{ key }} <span class="badge badge-light">{{ value }}</span>
+         <span class="sr-only">unread messages</span>
+       </button>
+       {% endfor %}
+   </div>
+   <div class="tag-rank">
+      <p>교수개발 상위 태그</p>
+      {% for key, value in pd_top_rank.items %}
+      <button type="button" class="btn btn-secondary" onclick="location.href='/contents/total_search/?q={{ key }}'">
+         {{ key }} <span class="badge badge-light">{{ value }}</span>
+         <span class="sr-only">unread messages</span>
+       </button>
+      {% endfor %}
+   </div>
+   <div class="tag-rank">
+      <p>금융리포트 상위 태그</p>
+      {% for key, value in fr_top_rank.items %}
+      <button type="button" class="btn btn-secondary" onclick="location.href='/contents/total_search/?q={{ key }}'">
+         {{ key }} <span class="badge badge-light">{{ value }}</span>
+         <span class="sr-only">unread messages</span>
+       </button>
+      {% endfor %}
+   </div>
+</div>
 
 {% endblock %}
 
@@ -30,15 +57,6 @@
       alert("검색어를 입력해주세요");
       return false;
     } 
-   //  else {
-   //    var query = $('#totalSearch').val();
-   //    var url = "{% url 'contents_all' %}";
-   //    console.log(url);
-   //    console.log(query);
-   //    var redirect_url = url + '?q=' + query;
-   //    console.log(redirect_url);
-   //    window.location.href = '/contents/table/?q=' + query;
-   //  }
 });
 </script>
 {% endblock %}

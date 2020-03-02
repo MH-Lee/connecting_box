@@ -1,6 +1,9 @@
 {% extends "contentsboard/_base_list.html" %}
 {% load static from staticfiles %} 
 {% block search %}
+
+{% if query != None %}
+{% else %}
 <form class="form-inline my-2 my-lg-0 justify-content-end"  method="GET" action="{% url 'start_up_list' %}">
     {% csrf_token %}
     <input type="text" class="searchTerm" type="search" name="q" placeholder="Search">
@@ -8,6 +11,7 @@
         <i class="fa fa-search"></i>
     </button>
 </form>
+{% endif %}
 {% endblock %}
 
 {% block table %}
