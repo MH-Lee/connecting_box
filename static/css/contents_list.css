@@ -86,7 +86,7 @@ td {
         width: 14%;
     }
     .item {
-        text-align: center;
+        /* text-align: center; */
         table-layout:fixed;
         word-break: keep-all; 
     }
