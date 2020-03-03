@@ -1,1 +1,1 @@
-python3 /home/ubuntu/contents/crontab_rescue.py
+python3 /home/ubuntu/connecting_box/contents/crontab_rescue.py
