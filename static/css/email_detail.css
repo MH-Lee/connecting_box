@@ -83,7 +83,6 @@
         width: 50%;
         font-size: 12px;
     }
-    }
     .item4 .item4_1 {
         width: 50%;
     }
@@ -94,16 +93,15 @@
 
 @media screen and (min-width: 413px) and ( max-width: 768px ) {
     .item2 .item2_1 {
-        width: 30%;
-        font-size: 12px;
+        display: none;
     }
     .item2 .item2_2 {
-        width: 40%;
-        font-size: 12px;
+        width: 50%;
+        font-size: 14px;
     }
     .item2 .item2_3 {
-        width: 30%;
-        font-size: 12px;
+        width: 50%;
+        font-size: 14px;
     }
     .item4 .item4_1 {
         width: 50%;
