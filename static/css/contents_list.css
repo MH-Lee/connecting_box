@@ -88,6 +88,10 @@ td {
         word-break: keep-all; 
         width: 14%;
     }
+    .fr-center {
+        width: 15%;
+        text-align: center;
+    }
     td .item {
         /* text-align: center; */
         table-layout:fixed;
