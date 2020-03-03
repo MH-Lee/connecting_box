@@ -20,29 +20,38 @@ iframe {
 @media screen and (min-width: 786px) and (max-width:1180px){
     h1 {
         font-size: 26px;
+        margin-left: 3rem; 
     }
     .col-lg-12 .button-set{
         margin: 3rem 0 0 1.8rem;
     }
-    
+    iframe {
+        height: 130vh; 
+        width:77vw
+    }
 }
 
 @media only screen and (min-width: 480px)  and (max-width: 786px) {
     h1 {
         font-size: 20px;
+        padding-left: 0.5rem; 
     }
     .col-lg-12 .button-set{
         margin: 3rem 0 0 1.8rem;
     }
-
     .btn {
         font-size: 16px;
+    }
+    iframe {
+        height: 130vh; 
+        width: 85vw
     }
 }
 
 @media only screen and (min-width: 200px)  and (max-width: 480px) {
     h1 {
         font-size: 20px;
+        padding-left: 0.5rem; 
     }
     .col-lg-12 .button-set{
         width: 100%;
@@ -54,6 +63,6 @@ iframe {
     }
     iframe {
         height: 130vh; 
-        width: 90vw
+        width: 85vw
     }
 }

@@ -83,6 +83,13 @@
         width: 50%;
         font-size: 12px;
     }
+    }
+    .item4 .item4_1 {
+        width: 50%;
+    }
+    .item4 .item4_2 {
+        width: 50%;
+    }
 }
 
 @media screen and (min-width: 413px) and ( max-width: 768px ) {
