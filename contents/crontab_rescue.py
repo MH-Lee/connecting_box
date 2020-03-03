@@ -69,6 +69,8 @@ def rescue_data_send():
         print("data_update complete")
     else:
         date_check = pd.to_datetime(update_check_obj.recent_date).date() + timedelta(weeks=1)
+        print(date_check)
+        print(crawling_enddate)
         if date_check > crawling_enddate:
             print("최신데이터")
         else:
