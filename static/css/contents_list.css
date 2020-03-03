@@ -69,6 +69,9 @@ label {
     width: 100%;
 }
 
+th .item {
+    text-align: center;
+}
 
 td {
     /* width:520px; */
@@ -85,7 +88,7 @@ td {
         word-break: keep-all; 
         width: 14%;
     }
-    .item {
+    td .item {
         /* text-align: center; */
         table-layout:fixed;
         word-break: keep-all; 
