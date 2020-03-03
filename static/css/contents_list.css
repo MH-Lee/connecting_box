@@ -132,6 +132,9 @@ td {
     .col-lg-12 table .center {
         width: 15%;
     }
+    .col-lg-12 table .fr-center {
+        width: 15%;
+    }
 }
 
 @media only screen and (min-width: 480px) and (max-width: 786px) {
@@ -157,6 +160,9 @@ td {
     .col-lg-12 table  .center {
         width: 28%;
     }
+    .col-lg-12 table .fr-center {
+        width: 25%;
+    }
 }
 
 @media only screen and (min-width: 480px) and (max-width: 786px) {
@@ -175,7 +181,10 @@ td {
     .col-lg-12 table .tag{
         display: none;
     }
-    .col-lg-12 table  .center {
+    .col-lg-12 table .center {
+        width: 28%;
+    }
+    .col-lg-12 table .fr-center {
         width: 28%;
     }
 }
@@ -206,5 +215,8 @@ td {
     }
     .col-lg-12 table .center {
         width: 40%;
+    }
+    .col-lg-12 table .fr-center {
+        width: 30%;
     }
 }
