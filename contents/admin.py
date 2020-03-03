@@ -4,7 +4,9 @@ from .models import (
                      ProfessorDev,
                      StartUp,
                      FinanceReport,
-                     Tag
+                     Tag,
+                     Rescue,
+                     RescueUpdateCheck
                      )
 # Register your models here.
 
@@ -28,8 +30,17 @@ class FinanceReportAdmin(admin.ModelAdmin):
     list_display = ('title', 'security_firm', 'category')
 
 
+class RescueAdmin(admin.ModelAdmin):
+    list_display = ('date', 'area', 'company_name', 'case_num', 'subject')
+
+
+class RescueUpdateCheckAdmin(admin.ModelAdmin):
+    list_display = ('recent_date',)
+
 admin.site.register(EmailContents, EmailContentsAdmin)
 admin.site.register(ProfessorDev, ProfessorDevAdmin)
 admin.site.register(StartUp, StartUpAdmin)
 admin.site.register(FinanceReport, FinanceReportAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(Rescue, RescueAdmin)
+admin.site.register(RescueUpdateCheck, RescueUpdateCheckAdmin)
