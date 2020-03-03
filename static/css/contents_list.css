@@ -69,9 +69,6 @@ label {
     width: 100%;
 }
 
-th .item {
-    text-align: center;
-}
 
 td {
     /* width:520px; */
@@ -88,13 +85,7 @@ td {
         word-break: keep-all; 
         width: 14%;
     }
-    .fr-center {
-        width: 15%;
-        text-align: center;
-        table-layout:fixed;
-        word-break: keep-all; 
-    }
-    td .item {
+    .item {
         /* text-align: center; */
         table-layout:fixed;
         word-break: keep-all; 
@@ -139,9 +130,6 @@ td {
         display: none;
     }
     .col-lg-12 table .center {
-        width: 15%;
-    }
-    .col-lg-12 table .fr-center {
         width: 15%;
     }
 }
@@ -193,9 +181,6 @@ td {
     .col-lg-12 table .center {
         width: 28%;
     }
-    .col-lg-12 table .fr-center {
-        width: 28%;
-    }
 }
 
 
@@ -223,9 +208,6 @@ td {
         width: 40%;
     }
     .col-lg-12 table .center {
-        width: 40%;
-    }
-    .col-lg-12 table .fr-center {
         width: 40%;
     }
 }
