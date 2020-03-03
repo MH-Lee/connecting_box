@@ -145,7 +145,6 @@ class RescueCrawler:
         #driver.close()
         return dataframe
 
-
     def get_news_content_keyword(self, final_result):
         naver_news_address = []
         for i in range(0,len(final_result)):
