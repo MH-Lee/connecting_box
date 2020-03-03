@@ -58,8 +58,8 @@
     <tr>
       <td class="index">{{ fr.id }}</td>
       <td class="center">{{ fr.security_firm }}</td>
-      <td class="item">{{ fr.title }}</td>
-      <td class="hide">{{ fr.category }}</td>
+      <td class="smart-hide">{{ fr.title }}</td>
+      <td class="smart-phone">{{ fr.category }}</td>
       <th class="link"><a href="{{ fr.news_link }}" target="_blank"><i class="far fa-newspaper"></i></a></th>
       <td class="tag">
         {% for tag in fr.tags.all %} 
