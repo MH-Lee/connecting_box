@@ -91,6 +91,8 @@ td {
     .fr-center {
         width: 15%;
         text-align: center;
+        table-layout:fixed;
+        word-break: keep-all; 
     }
     td .item {
         /* text-align: center; */
