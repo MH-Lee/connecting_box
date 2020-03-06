@@ -98,6 +98,9 @@ td {
     }
 
 @media only screen and (max-width: 786px) {
+    h1 {
+        font-size: 14px;
+    }
     th {
         font-size: 12px;
     }
