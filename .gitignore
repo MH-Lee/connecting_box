@@ -4,3 +4,4 @@ db.sqlite3
 venv.bat
 secrets.json
 static-dist/
+*.csv
